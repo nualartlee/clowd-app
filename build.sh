@@ -15,10 +15,6 @@ echo
 # Check user is root
 check_errs $EUID "This script must be run as root"
 
-# Download latest version
-download.sh
-check_errs $? "Failed downloading latest version"
-
 # Check if required packages are installed
 echo "Checking required packages"
 check_package pwgen

@@ -17,7 +17,7 @@ services:
           - ./nginx_container/logs:/etc/nginx/logs/
           - ./www:/www/
         ports:
-          - "11080:80"
+          - "9080:80"
         environment:
           CERTBOT_EMAIL: /run/secrets/certbot_email
         secrets:
