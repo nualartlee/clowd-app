@@ -6,7 +6,7 @@ secrets:
 
 networks:
   default:
-  nginx_default:
+  nginx_main:
     external: true
 
 services:
@@ -23,6 +23,7 @@ services:
         secrets:
          - source: certbot_email
         networks:
-         - default
-         - nginx_default
+          default:
+          nginx_main:
+            ipv4_address: 172.16.0.3
         restart: unless-stopped
