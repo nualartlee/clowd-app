@@ -6,6 +6,9 @@
 # Pulls and deploys the previous version of the current branch from remote origin.
 #
 
+# Work from script's directory
+cd "${0%/*}"
+
 # Import common functions
 source scripts/common.sh
 
