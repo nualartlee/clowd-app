@@ -1,25 +1,13 @@
 #!/usr/bin/env bash
 
-# Initial setup
-# Creates docker containers, passwords, keys, etc
+# Creates passwords, keys, etc
 
 # Import common functions
-source ./common.sh
-
-# Print header
-clear
-echo "====================================="
-echo "           Build Project"
-echo
-
-# Check user is root
-check_errs $EUID "This script must be run as root"
+source scripts/common.sh
 
 # Check if required packages are installed
 echo "Checking required packages"
 check_package pwgen
-check_package docker
-check_package docker-compose
 echo
 
 # Create a directory to store passwords
@@ -56,26 +44,13 @@ fi
 service docker start
 check_errs $? "Failed starting docker"
 
-# Stop containers
-docker-compose down
-check_errs $? "Failed stopping containers"
-
-# Rebuild containers
-echo
-echo "Building containers"
-docker-compose build
-check_errs $? "Failed building containers"
-
-# Run containers in background
-echo
-echo "Starting containers"
-docker-compose up -d &
-check_errs $? "Failed starting containers"
-
-# Allow for startup
-sleep 5
-
-echo
-echo "Initial Setup Completed"
-echo "Project is running"
-echo
+# Create docker main network if not present
+if [ -z "$(docker network ls | grep nginx_main)" ]
+then
+    echo "creating docker network 'nginx_main'"
+    docker network create --subnet 172.16.0.0/16 nginx_main
+    check_errs $? "Failed creating docker network"
+else
+    echo "docker network 'nginx_main' already present"
+fi
+check_errs $? "Failed creating docker network"

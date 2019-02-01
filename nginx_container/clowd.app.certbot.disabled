@@ -1,0 +1,16 @@
+server {
+	listen      443 ssl;
+	listen      [::]:443 ssl;
+	server_name clowd.app;
+	ssl_certificate     /etc/letsencrypt/live/clowd.app/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/clowd.app/privkey.pem;
+
+	charset     utf-8;
+
+	# max upload size
+	client_max_body_size 75M;
+
+	location / {
+	  root /www;
+	}
+}
