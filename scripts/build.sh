@@ -2,11 +2,8 @@
 
 # Creates passwords, keys, etc
 
-# Work from projects's directory
-cd "${0%/*}/.."
-
 # Import common functions
-source deploy-scripts/common.sh
+source scripts/common.sh
 
 # Check if required packages are installed
 echo "Checking required packages"
