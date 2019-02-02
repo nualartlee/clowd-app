@@ -15,7 +15,6 @@ source deploy-scripts/common.sh
 projectname=${PWD##*/}
 
 # Print header
-clear
 echo "====================================="
 echo "           Testing $projectname"
 echo
@@ -33,5 +32,4 @@ fi
 
 echo
 echo "Deployment passed all tests"
-echo "Project is running"
 echo
