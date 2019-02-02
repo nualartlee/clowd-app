@@ -16,7 +16,6 @@ source deploy-scripts/common.sh
 projectname=${PWD##*/}
 
 # Print header
-clear
 echo "====================================="
 echo "      Revert $projectname"
 echo
@@ -69,6 +68,9 @@ echo "Starting containers"
 docker-compose up -d &
 check_errs $? "Failed starting containers"
 
+# Allow for startup
+sleep 5
+
 # Run any custom post_build script
 if [ -e scripts/post_build.sh ]
 then
@@ -80,10 +82,17 @@ else
     echo "No custom post_build scripts"
 fi
 
-# Allow for startup
-sleep 5
-
 echo
 echo "Rollback Completed"
-echo "Project is running"
+echo
+
+# Run tests
+echo "Starting tests..."
+deploy-scripts/deployment_test.sh
+check_errs $? "Test failed."
+
+# Completed successfully
+echo
+echo "Project Running"
+echo
 echo
